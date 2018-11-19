@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="main.java.com.fmanager.dao.ArticleDAO">
+	<select id="getArticleByPage" parameterType="java.lang.Integer"
+		resultType="main.java.com.fmanager.models.Article">
+	select article.id as id, users.username as username,
+	article.title as articleTitle, article.content_id as contentId,
+	article.content_desc as contentDesc, article.publish_time as publishTime,
+	article.view_count as viewCount, article.article_type as articleType,
+	article.protect_type as protectType, article.is_comment_able as
+	isCommentAble,
+	article.tag as tags from article, users where article.user_id = users.id limit
+	10*#{page} offset 10*(#{page} -1)
+	</select>
+	
+	
+	<select id="getArticleById" parameterType="java.lang.Long"
+		resultType="main.java.com.fmanager.models.Article">
+	select article.id as id, users.username as username,
+	article.title as articleTitle, article.content_id as contentId,
+	article.content_desc as contentDesc, article.publish_time as publishTime,
+	article.view_count as viewCount, article.article_type as articleType,
+	article.protect_type as protectType, article.is_comment_able as
+	isCommentAble,
+	article.tag as tags, article_content.content as content  from article, users,article_content where article.user_id = users.id and article.id = #{id} and article_content.id=article.content_id
+	</select>
+	
+	
+	<insert id="saveArticleContent" parameterType="main.java.com.fmanager.models.Article" useGeneratedKeys="true" keyProperty="contentId" keyColumn="id">
+		insert into article_content (content) values (#{content})
+	</insert>
+	
+	
+	<insert id="saveArticle" parameterType="main.java.com.fmanager.models.Article">
+		insert into article (user_id, title,  content_id, content_desc, publish_time) values (
+			#{userId},#{articleTitle},#{contentId},#{contentDesc},#{publishTime}
+		)
+	</insert>
+</mapper>

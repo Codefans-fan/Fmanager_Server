@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="main.java.com.fmanager.dao.UserDAO">
+	<select id="findById" parameterType="java.lang.Long"
+		resultType="main.java.com.fmanager.models.User">
+		select id as id, 
+		 count as count,
+		 create_date as createDate,
+		 display_name as displayName,
+		 email as email,
+		 last_login_time as lastLoginTime,
+		 login_date as loginDate,
+		 mobile as mobile,
+		 username as userName
+		 from users where id=#{id}
+	</select>
+
+	<select id="findByUserName" parameterType="java.lang.String"
+		resultType="main.java.com.fmanager.models.User">
+		select id as id, 
+		 count as count,
+		 create_date as createDate,
+		 display_name as displayName,
+		 email as email,
+		 last_login_time as lastLoginTime,
+		 login_date as loginDate,
+		 mobile as mobile,
+		 password as password,
+		 username as userName
+		 from users where username=#{name}
+	</select>
+	
+	
+	<select id="findByEmail" parameterType="java.lang.String"
+		resultType="main.java.com.fmanager.models.User">
+		select id as id, 
+		 count as count,
+		 create_date as createDate,
+		 display_name as displayName,
+		 email as email,
+		 last_login_time as lastLoginTime,
+		 login_date as loginDate,
+		 mobile as mobile,
+		 password as password,
+		 username as userName
+		 from users where email=#{name}
+	</select>
+	
+	<select id="findByMobile" parameterType="java.lang.String"
+		resultType="main.java.com.fmanager.models.User">
+		select id as id, 
+		 count as count,
+		 create_date as createDate,
+		 display_name as displayName,
+		 email as email,
+		 last_login_time as lastLoginTime,
+		 login_date as loginDate,
+		 mobile as mobile,
+		 password as password,
+		 username as userName
+		 from users where mobile=#{mobile}
+	</select>
+	
+	<insert id="registerUser" parameterType="main.java.com.fmanager.models.User">
+		insert into users(username, email, password) values (#{userName},#{email},#{password})
+	</insert>
+	
+	
+	<select id="getUserList" resultType="main.java.com.fmanager.models.User">
+		select id as id, 
+		 create_date as createDate,
+		 email as email,
+		 mobile as mobile,
+		 username as userName
+		 from users order by id asc  limit 1000
+	</select>
+
+	
+	<delete id="deleteUserById" parameterType="java.lang.Long">
+		delete from users where  users.id = #{id}	
+	</delete>
+
+
+</mapper>
