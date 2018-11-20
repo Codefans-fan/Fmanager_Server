@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 
@@ -16,8 +15,7 @@ public class ControllerInterceptor extends HandlerInterceptorAdapter {
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        logger.debug("pre Handle method:" + handlerMethod.getMethod().getName()); //$NON-NLS-1$
+        logger.debug("pre Handle method:" + handler.getClass().toString()); //$NON-NLS-1$
         return true;
     }
     

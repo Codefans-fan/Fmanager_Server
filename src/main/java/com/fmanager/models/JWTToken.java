@@ -3,7 +3,6 @@ package main.java.com.fmanager.models;
 import org.apache.shiro.authc.AuthenticationToken;
 
 public class JWTToken implements AuthenticationToken {
-
 	
 	/**
 	 * 

@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,6 +15,9 @@ import main.java.com.fmanager.models.ErrorResponse;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
+	
+	private Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
+	
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ShiroException.class)
     public ErrorResponse handle401(ShiroException e) {
@@ -28,6 +33,8 @@ public class ExceptionHandlerController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse globalException(HttpServletRequest request, Throwable ex) {
+    	ex.printStackTrace();
+    	logger.debug(ex.getMessage());
         return new ErrorResponse(getStatus(request).value(), ex.getMessage());
     }
 

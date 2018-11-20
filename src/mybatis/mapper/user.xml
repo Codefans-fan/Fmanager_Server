@@ -11,7 +11,8 @@
 		 last_login_time as lastLoginTime,
 		 login_date as loginDate,
 		 mobile as mobile,
-		 username as userName
+		 username as userName,
+		 salt as salt
 		 from users where id=#{id}
 	</select>
 
@@ -26,7 +27,8 @@
 		 login_date as loginDate,
 		 mobile as mobile,
 		 password as password,
-		 username as userName
+		 username as userName,
+		 salt as salt
 		 from users where username=#{name}
 	</select>
 	
@@ -42,7 +44,8 @@
 		 login_date as loginDate,
 		 mobile as mobile,
 		 password as password,
-		 username as userName
+		 username as userName,
+		 salt as salt
 		 from users where email=#{name}
 	</select>
 	
@@ -57,12 +60,13 @@
 		 login_date as loginDate,
 		 mobile as mobile,
 		 password as password,
-		 username as userName
+		 username as userName,
+		 salt as salt
 		 from users where mobile=#{mobile}
 	</select>
 	
 	<insert id="registerUser" parameterType="main.java.com.fmanager.models.User">
-		insert into users(username, email, password) values (#{userName},#{email},#{password})
+		insert into users(username, email, password,salt) values (#{userName},#{email},#{password}, #{salt})
 	</insert>
 	
 	

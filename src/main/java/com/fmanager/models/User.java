@@ -6,6 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.util.StringUtils;
+
+import main.java.com.fmanager.utils.Utils;
+
+
 public class User {
 
 	/**
@@ -36,6 +41,8 @@ public class User {
 	
 	private int count;
 
+	private String salt;
+	
 	public long getId() {
 		return id;
 	}
@@ -161,6 +168,18 @@ public class User {
 		
 	}
 	
+	
+	public String getSalt() {
+		if(StringUtils.isEmpty(this.salt)) {
+			this.salt = Utils.getRandomSalt();
+		}
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
 	@Override
 	public String toString() {
 		return this.getUserName() + ":" + this.getEmail(); //$NON-NLS-1$

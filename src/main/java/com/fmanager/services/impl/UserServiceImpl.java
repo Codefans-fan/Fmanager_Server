@@ -18,7 +18,6 @@ import main.java.com.fmanager.services.UserServcie;
 @Service
 public class UserServiceImpl implements UserServcie {
 
-
 	@Resource
 	private UserDAO userDAO;
 
@@ -28,12 +27,18 @@ public class UserServiceImpl implements UserServcie {
 	@Resource
 	private PermissionDAO permissionDAO;
 
-	
 	@Override
 	public User findById(long id) {
-		return userDAO.findById(id);
+		User user =  userDAO.findById(id);
+		List<UserRole>  userRoles =  userRoleDAO.getUserRoleByUserId(user.getId());
+		List<Permission> permissions = new ArrayList<>();
+		for(UserRole role :  userRoles) {
+			permissions.addAll(permissionDAO.findPermissionsByRole(role.getId()));
+		}
+		user.setUserRoles(userRoles);
+		user.setPermission(permissions);
+		return user;
 	}
-
 
 	@Override
 	public List<User> getUserList() {
@@ -45,35 +50,32 @@ public class UserServiceImpl implements UserServcie {
 		userDAO.deleteUserById(id);
 	}
 
-
 	@Override
 	public User findByEmail(String email) {
-		User user =  userDAO.findByEmail(email);
-		
-		List<UserRole>  userRoles =  userRoleDAO.getUserRoleByUserId(user.getId());
+		User user = userDAO.findByEmail(email);
+
+		List<UserRole> userRoles = userRoleDAO.getUserRoleByUserId(user.getId());
 		List<Permission> permissions = new ArrayList<>();
-		for(UserRole role :  userRoles) {
+		for (UserRole role : userRoles) {
 			permissions.addAll(permissionDAO.findPermissionsByRole(role.getId()));
 		}
 		user.setUserRoles(userRoles);
 		user.setPermission(permissions);
 		return user;
 	}
-
 
 	@Override
 	public User findByMobile(String mobile) {
 		User user = userDAO.findByMobile(mobile);
-		
-		List<UserRole>  userRoles =  userRoleDAO.getUserRoleByUserId(user.getId());
+
+		List<UserRole> userRoles = userRoleDAO.getUserRoleByUserId(user.getId());
 		List<Permission> permissions = new ArrayList<>();
-		for(UserRole role :  userRoles) {
+		for (UserRole role : userRoles) {
 			permissions.addAll(permissionDAO.findPermissionsByRole(role.getId()));
 		}
 		user.setUserRoles(userRoles);
 		user.setPermission(permissions);
 		return user;
 	}
-
 
 }

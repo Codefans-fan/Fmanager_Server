@@ -11,7 +11,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 public final class JwtTokenUtil {
 
 	// 10 minute
-    private static final long EXPIRE_TIME = 10*60*1000;
+    private static final long EXPIRE_TIME = 60*60*1000;
 
 
     /**

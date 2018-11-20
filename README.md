@@ -1,7 +1,7 @@
 # fmanager
 fmanager server side
 
-demo:http://www.gushenwo.com
+demo:xxxx
 
 -[client source](https://github.com/Codefans-fan/FManager)
 
