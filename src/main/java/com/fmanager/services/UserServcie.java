@@ -2,6 +2,7 @@ package main.java.com.fmanager.services;
 
 import java.util.List;
 
+import main.java.com.fmanager.models.RegisterUser;
 import main.java.com.fmanager.models.User;
 
 public interface UserServcie {
@@ -16,6 +17,6 @@ public interface UserServcie {
 
 	public void deleteUserById(long id);
 	
-	
+	public void registerUser(RegisterUser registerUser);
 	
 }

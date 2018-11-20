@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import main.java.com.fmanager.models.ErrorResponse;
+import main.java.com.fmanager.models.JsonObjectResponse;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
@@ -20,22 +20,22 @@ public class ExceptionHandlerController {
 	
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ShiroException.class)
-    public ErrorResponse handle401(ShiroException e) {
-        return new ErrorResponse(401, e.getMessage());
+    public JsonObjectResponse handle401(ShiroException e) {
+        return new JsonObjectResponse(401, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
-    public ErrorResponse handle401() {
-        return new ErrorResponse(401, "Unauthorized");
+    public JsonObjectResponse handle401() {
+        return new JsonObjectResponse(401, "Unauthorized");
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse globalException(HttpServletRequest request, Throwable ex) {
+    public JsonObjectResponse globalException(HttpServletRequest request, Throwable ex) {
     	ex.printStackTrace();
     	logger.debug(ex.getMessage());
-        return new ErrorResponse(getStatus(request).value(), ex.getMessage());
+        return new JsonObjectResponse(getStatus(request).value(), ex.getMessage());
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {

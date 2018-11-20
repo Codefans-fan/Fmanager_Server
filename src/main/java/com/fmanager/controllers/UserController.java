@@ -7,6 +7,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.java.com.fmanager.models.AccessToken;
+import main.java.com.fmanager.models.JsonObjectResponse;
+import main.java.com.fmanager.models.RegisterUser;
 import main.java.com.fmanager.models.User;
 import main.java.com.fmanager.services.UserServcie;
 import main.java.com.fmanager.utils.JwtTokenUtil;
@@ -41,6 +44,26 @@ public class UserController {
 		if(subject.getPrincipals() != null) {
 			subject.logout();
         }
+	}
+	
+	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public JsonObjectResponse register(@RequestBody RegisterUser registerUser) {
+		if(registerUser == null) {
+			return new JsonObjectResponse(401, "Register User failed");
+			
+		}
+		
+		if(registerUser.getPassword() == null || registerUser.getComfirmPassword() == null) {
+			return new JsonObjectResponse(401, "Register User failed");
+		}
+		
+		if(!registerUser.getPassword().equals(registerUser.getComfirmPassword())) {
+			return new JsonObjectResponse(401, "Register User failed");
+		}
+		userService.registerUser(registerUser);
+		
+		return new JsonObjectResponse(HttpStatus.OK.value(), "Success");
 	}
 	
 	

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users
   mobile character varying(16),
   password character varying(64) NOT NULL,
   username character varying(64) NOT NULL,
-  salt character varying(16) NOT NULL,
+  salt character varying(32) NOT NULL,
   deleted boolean NOT NULL DEFAULT false
   
 );

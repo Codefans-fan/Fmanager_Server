@@ -5,12 +5,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Service;
 
 import main.java.com.fmanager.dao.PermissionDAO;
 import main.java.com.fmanager.dao.UserDAO;
 import main.java.com.fmanager.dao.UserRoleDAO;
 import main.java.com.fmanager.models.Permission;
+import main.java.com.fmanager.models.RegisterUser;
 import main.java.com.fmanager.models.User;
 import main.java.com.fmanager.models.UserRole;
 import main.java.com.fmanager.services.UserServcie;
@@ -76,6 +80,18 @@ public class UserServiceImpl implements UserServcie {
 		user.setUserRoles(userRoles);
 		user.setPermission(permissions);
 		return user;
+	}
+
+	@Override
+	public void registerUser(RegisterUser registerUser) {
+		
+		User user = new User();
+		user.setUserName(registerUser.getUserName());
+		user.setEmail(registerUser.getEmail());
+		user.setMobile(registerUser.getMobile());
+		String hashedPasswordHex = new SimpleHash(Sha256Hash.ALGORITHM_NAME, registerUser.getPassword(), ByteSource.Util.bytes(user.getSalt())).toHex();
+		user.setPassword(hashedPasswordHex);
+		userDAO.registerUser(user);
 	}
 
 }

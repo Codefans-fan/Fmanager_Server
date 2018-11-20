@@ -1,12 +1,12 @@
 package main.java.com.fmanager.models;
 
-public final class ErrorResponse {
+public final class JsonObjectResponse {
 	private int code;
 	
 	private String message;
 
 	
-	public ErrorResponse(int code, String msg) {
+	public JsonObjectResponse(int code, String msg) {
 		this.code = code;
 		this.message = msg;
 	}
