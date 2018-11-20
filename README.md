@@ -1,7 +1,7 @@
 # fmanager
 fmanager server side
 
-demo:xxxx
+Spring boot + shiro+ jwt
 
 -[client source](https://github.com/Codefans-fan/FManager)
 
