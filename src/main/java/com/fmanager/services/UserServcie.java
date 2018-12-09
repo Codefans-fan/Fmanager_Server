@@ -4,6 +4,7 @@ import java.util.List;
 
 import main.java.com.fmanager.models.RegisterUser;
 import main.java.com.fmanager.models.User;
+import main.java.com.fmanager.models.UserRole;
 
 public interface UserServcie {
 	
@@ -18,5 +19,8 @@ public interface UserServcie {
 	public void deleteUserById(long id);
 	
 	public void registerUser(RegisterUser registerUser);
+	
+	
+	public List<UserRole> getUserRoles();
 	
 }

@@ -9,6 +9,6 @@
 	</select>
 
 	<select id="getRoleList" resultType="main.java.com.fmanager.models.UserRole">
-		select id as id, role_name as roleName, description as description from user_role
+		select id as id, role_name as roleName, description as description from user_role where deleted=false
 	</select>
 </mapper>

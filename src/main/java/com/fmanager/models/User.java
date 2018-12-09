@@ -8,6 +8,8 @@ import java.util.Set;
 
 import org.springframework.util.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import main.java.com.fmanager.utils.Utils;
 
 
@@ -17,30 +19,38 @@ public class User {
 	* 
 	*/
 
+	@JsonIgnore
 	private long id;
 
 	private String userName;
 
+	@JsonIgnore
 	private String password;
 
 	private String email;
 
 	private String displayName;
 
+	@JsonIgnore
 	private String mobile;
 
+	@JsonIgnore
 	private Timestamp createDate;
 
+	@JsonIgnore
 	private Timestamp loginDate;
 
+	@JsonIgnore
 	private Timestamp lastLoginTime;
 
 	private List<UserRole> userRoles;
 
 	private List<Permission> permission;
 	
+	@JsonIgnore
 	private int count;
 
+	@JsonIgnore
 	private String salt;
 	
 	public long getId() {

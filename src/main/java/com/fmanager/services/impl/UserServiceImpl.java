@@ -94,4 +94,9 @@ public class UserServiceImpl implements UserServcie {
 		userDAO.registerUser(user);
 	}
 
+	@Override
+	public List<UserRole> getUserRoles() {
+		return userRoleDAO.getRoleList();
+	}
+
 }

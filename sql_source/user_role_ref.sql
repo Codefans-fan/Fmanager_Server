@@ -5,3 +5,5 @@ CREATE TABLE IF NOT EXISTS user_role_ref (
 );
 
 insert into user_role_ref(id,user_id,role_id) values(1,1,1);
+
+insert into user_role_ref(id,user_id,role_id) values(2,1,2);

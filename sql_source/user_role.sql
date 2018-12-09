@@ -6,4 +6,8 @@ CREATE TABLE IF NOT EXISTS user_role (
   deleted boolean NOT NULL default false
 );
 
-INSERT INTO user_role (1,role_name, description,pid,deleted) VALUES ( 'admin', 'admin',0,false);
+INSERT INTO user_role (id,role_name, description,pid,deleted) VALUES (1, 'admin', 'admin',0,false);
+
+INSERT INTO user_role (id,role_name, description,pid,deleted) VALUES (2, 'user', 'register user',0,false);
+
+INSERT INTO user_role (id,role_name, description,pid,deleted) VALUES (3, 'visitor', 'not register user',0,false);
