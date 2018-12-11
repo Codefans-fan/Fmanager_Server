@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.java.com.fmanager.exception.FmanagerRestException;
 import main.java.com.fmanager.models.Article;
+import main.java.com.fmanager.models.ArticleType;
 import main.java.com.fmanager.services.ArticleService;
 
 @RestController
@@ -37,4 +39,10 @@ public class ArticleController {
     	return articleService.saveArticle(article);
     }
     
+    @RequestMapping(value="/typelist",method = RequestMethod.GET)
+    @RequiresRoles("admin")
+    public List<ArticleType> getArticleTypes() {
+    	return articleService.getArticleTypes();
+    	
+    }
 }

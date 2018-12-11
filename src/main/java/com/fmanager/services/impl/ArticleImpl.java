@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import main.java.com.fmanager.dao.ArticleDAO;
 import main.java.com.fmanager.exception.FmanagerRestException;
 import main.java.com.fmanager.models.Article;
+import main.java.com.fmanager.models.ArticleType;
 import main.java.com.fmanager.services.ArticleService;
 import main.java.com.fmanager.utils.ErrorNumber;
 
@@ -49,4 +50,10 @@ public class ArticleImpl implements ArticleService {
 		return article;
 	}
 
+	@Override
+	public List<ArticleType> getArticleTypes() {
+		return articleDAO.getArticleTypes();
+	}
+
+	
 }

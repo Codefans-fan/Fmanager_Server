@@ -36,4 +36,9 @@
 			#{userId},#{articleTitle},#{contentId},#{contentDesc},#{publishTime}
 		)
 	</insert>
+	
+	<select id="getArticleTypes"  resultType="main.java.com.fmanager.models.ArticleType">
+		 select id as id,type_name as typeName, description as description from article_type where deleted=false
+	</select>
+	
 </mapper>

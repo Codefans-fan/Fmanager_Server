@@ -4,6 +4,7 @@ import java.util.List;
 
 import main.java.com.fmanager.exception.FmanagerRestException;
 import main.java.com.fmanager.models.Article;
+import main.java.com.fmanager.models.ArticleType;
 
 public interface ArticleService {
     
@@ -11,7 +12,8 @@ public interface ArticleService {
     
     public Article getArticleById(long id);
     
-    
     public Article saveArticle(Article article) throws FmanagerRestException;
 
+    public List<ArticleType> getArticleTypes();
+    
 }
