@@ -7,4 +7,6 @@ public final class ErrorNumber {
 	
 	
 	public static final int ARTICLE_TITLE_EMPTY = 101;
+	
+	public static final int AUTHENTICATION_ERROR = 102;
 }

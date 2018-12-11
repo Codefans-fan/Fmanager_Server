@@ -9,6 +9,8 @@ import java.util.Set;
 import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import main.java.com.fmanager.utils.Utils;
 
@@ -24,7 +26,7 @@ public class User {
 
 	private String userName;
 
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
 	private String email;
