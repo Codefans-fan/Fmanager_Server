@@ -55,5 +55,10 @@ public class ArticleImpl implements ArticleService {
 		return articleDAO.getArticleTypes();
 	}
 
+	@Override
+	public void updateArticleTypes(List<ArticleType> typeList) {
+		articleDAO.updateArticleTypes(typeList);
+	}
+
 	
 }

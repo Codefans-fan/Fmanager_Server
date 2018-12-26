@@ -53,6 +53,15 @@ public class ArticleController {
     	
     }
     
+    @RequestMapping(value="/updatetypes",method = RequestMethod.PUT)
+    @RequiresRoles("admin")
+    public List<ArticleType> updateTypes(@RequestBody List<ArticleType> typesList) {
+    	articleService.updateArticleTypes(typesList);
+    	return typesList;
+    }
+    
+    
+    
     @RequestMapping(value="/test",method = RequestMethod.GET)
     @RequiresGuest
     public void test() {

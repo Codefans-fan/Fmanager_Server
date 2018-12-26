@@ -38,7 +38,13 @@
 	</insert>
 	
 	<select id="getArticleTypes"  resultType="main.java.com.fmanager.models.ArticleType">
-		 select id as id,type_name as typeName, description as description from article_type where deleted=false
+		 select id as id,type_name as typeName, description as description from article_type where deleted=false order by id asc
 	</select>
+	
+	<update id="updateArticleTypes" parameterType="java.util.List">
+		<foreach collection="list" item="articleType"  index="index"  separator=";" >
+       		 UPDATE  article_type set type_name=#{articleType.typeName},description=#{articleType.description}  WHERE id=#{articleType.id}
+    	</foreach>
+	</update>
 	
 </mapper>

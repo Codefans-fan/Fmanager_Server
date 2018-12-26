@@ -19,4 +19,6 @@ public interface ArticleDAO {
 	public long saveArticleContent(Article article);
 	
 	public List<ArticleType> getArticleTypes();
+
+	public void updateArticleTypes(List<ArticleType> typeList);
 }
