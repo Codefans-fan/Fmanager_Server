@@ -1,25 +1,31 @@
 package main.java.com.fmanager.controllers;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.authz.annotation.RequiresGuest;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import main.java.com.fmanager.events.Event;
 import main.java.com.fmanager.events.IEventPublisher;
-import main.java.com.fmanager.events.TestEventModel;
 import main.java.com.fmanager.exception.FmanagerRestException;
 import main.java.com.fmanager.models.Article;
 import main.java.com.fmanager.models.ArticleType;
+import main.java.com.fmanager.models.SimpleArticle;
+import main.java.com.fmanager.models.User;
 import main.java.com.fmanager.services.ArticleService;
+import main.java.com.fmanager.services.UserServcie;
+import main.java.com.fmanager.utils.JwtTokenUtil;
 
 @RestController
 @RequestMapping("/article")
@@ -28,6 +34,10 @@ public class ArticleController {
     @Resource
     private ArticleService articleService;
 	
+    @Resource
+	private UserServcie userService;
+
+    
     @Resource
     private IEventPublisher eventPublisherServiceImpl;
     
@@ -60,16 +70,34 @@ public class ArticleController {
     	return typesList;
     }
     
-    
-    
-    @RequestMapping(value="/test",method = RequestMethod.GET)
-    @RequiresGuest
-    public void test() {
+    @RequestMapping(value="/updatearticle",method = RequestMethod.POST)
+    @RequiresRoles("admin")
+    public SimpleArticle updateArticle(@RequestBody SimpleArticle simpleArticle) {
     	
+    	Subject subject = SecurityUtils.getSubject();
+		String tokenString =  (String) subject.getPrincipal();
+		
+		String username = JwtTokenUtil.getUsername(tokenString);
+		if(StringUtils.isEmpty(tokenString)) {
+			return null;
+		}
     	
-    	System.out.println("stest");
-    	TestEventModel model = new TestEventModel();
-    	model.setText("Hello world");
-    	eventPublisherServiceImpl.publishEvent(new Event<>(this,model));
+		User user = userService.findByEmail(username);
+		if(user == null) {
+			return null;
+		}
+    	
+		Article article = new Article();
+		
+		article.setUserId(user.getId());
+		article.setArticleTitle(simpleArticle.getTitle());
+		article.setContent(simpleArticle.getContext());
+		article.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+    	articleService.updateArticle(article);
+    	
+    	simpleArticle.setId(article.getId());
+    	return simpleArticle;
     }
+    
+    
 }

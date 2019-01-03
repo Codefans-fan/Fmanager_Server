@@ -21,6 +21,9 @@ public class ArticleImpl implements ArticleService {
 	@Resource
 	private ArticleDAO articleDAO;
 	
+	
+	
+	
     @Override
     public List<Article> getArticles(int page) {
     	if(page > 0) {
@@ -58,6 +61,21 @@ public class ArticleImpl implements ArticleService {
 	@Override
 	public void updateArticleTypes(List<ArticleType> typeList) {
 		articleDAO.updateArticleTypes(typeList);
+	}
+
+	@Override
+	public Article updateArticle(Article article) {
+		
+		
+		if(article.getId() > 0) {
+			//update
+		}else {
+			//new
+			articleDAO.saveArticleContent(article);
+			articleDAO.saveArticle(article);
+		}
+		
+		return null;
 	}
 
 	

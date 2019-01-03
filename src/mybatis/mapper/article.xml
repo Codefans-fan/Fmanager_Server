@@ -31,9 +31,9 @@
 	</insert>
 	
 	
-	<insert id="saveArticle" parameterType="main.java.com.fmanager.models.Article">
-		insert into article (user_id, title,  content_id, content_desc, publish_time) values (
-			#{userId},#{articleTitle},#{contentId},#{contentDesc},#{publishTime}
+	<insert id="saveArticle" parameterType="main.java.com.fmanager.models.Article" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into article (user_id, title,  content_id, content_desc, update_time) values (
+			#{userId},#{articleTitle},#{contentId},#{contentDesc},#{updateTime}
 		)
 	</insert>
 	

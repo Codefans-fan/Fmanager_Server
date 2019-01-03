@@ -18,4 +18,6 @@ public interface ArticleService {
     
     public void updateArticleTypes(List<ArticleType> typeList);
     
+    
+    public Article updateArticle(Article article);
 }

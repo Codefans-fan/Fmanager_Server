@@ -17,6 +17,7 @@ public class Article {
     private int protectType;
     private boolean isCommentAble;
     private String tags;
+    private Timestamp updateTime;
     
     //only when get article detail will set this value
     private String content;
@@ -100,6 +101,11 @@ public class Article {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
+	public Timestamp getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
     
-	
 }

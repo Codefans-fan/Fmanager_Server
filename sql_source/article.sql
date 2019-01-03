@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS article (
   title character varying(128),  -- 文章title
   content_id bigint,  -- 文章id
   content_desc character varying(128),  -- 文章文章片段内容
-  publish_time timestamp without time zone,  -- 发布时间
+  publish_time timestamp without time zone default Now(),  -- 发布时间
+  update_time timestamp without time zone default Now(),  -- 发布时间
   view_count int, -- 查看次数
   article_type bigint,  -- 文章类型
   protect_type int , -- 文章模式 ：  私有， 公开， 部分人可看

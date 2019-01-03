@@ -21,4 +21,5 @@ public interface ArticleDAO {
 	public List<ArticleType> getArticleTypes();
 
 	public void updateArticleTypes(List<ArticleType> typeList);
+	
 }

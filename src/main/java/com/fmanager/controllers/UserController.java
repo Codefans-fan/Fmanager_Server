@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.java.com.fmanager.models.AccessToken;
-import main.java.com.fmanager.models.JWTToken;
 import main.java.com.fmanager.models.JsonObjectResponse;
 import main.java.com.fmanager.models.RegisterUser;
 import main.java.com.fmanager.models.User;

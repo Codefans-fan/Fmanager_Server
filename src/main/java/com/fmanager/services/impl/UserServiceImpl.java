@@ -58,6 +58,9 @@ public class UserServiceImpl implements UserServcie {
 	public User findByEmail(String email) {
 		User user = userDAO.findByEmail(email);
 
+		if(user == null) {
+			return null;
+		}
 		List<UserRole> userRoles = userRoleDAO.getUserRoleByUserId(user.getId());
 		List<Permission> permissions = new ArrayList<>();
 		for (UserRole role : userRoles) {
@@ -71,7 +74,9 @@ public class UserServiceImpl implements UserServcie {
 	@Override
 	public User findByMobile(String mobile) {
 		User user = userDAO.findByMobile(mobile);
-
+		if(user == null) {
+			return null;
+		}
 		List<UserRole> userRoles = userRoleDAO.getUserRoleByUserId(user.getId());
 		List<Permission> permissions = new ArrayList<>();
 		for (UserRole role : userRoles) {
