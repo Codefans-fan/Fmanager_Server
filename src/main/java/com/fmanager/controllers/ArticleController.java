@@ -93,6 +93,8 @@ public class ArticleController {
 		article.setArticleTitle(simpleArticle.getTitle());
 		article.setContent(simpleArticle.getContext());
 		article.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		article.setArticleType(simpleArticle.getArticleType());
+		article.setContentDesc(simpleArticle.getContentDesc());
     	articleService.updateArticle(article);
     	
     	simpleArticle.setId(article.getId());
