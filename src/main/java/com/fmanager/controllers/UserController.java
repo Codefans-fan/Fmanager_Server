@@ -19,6 +19,7 @@ import main.java.com.fmanager.models.AccessToken;
 import main.java.com.fmanager.models.JsonObjectResponse;
 import main.java.com.fmanager.models.RegisterUser;
 import main.java.com.fmanager.models.User;
+import main.java.com.fmanager.models.UserCount;
 import main.java.com.fmanager.models.UserRole;
 import main.java.com.fmanager.services.UserServcie;
 import main.java.com.fmanager.utils.ErrorNumber;
@@ -37,7 +38,7 @@ public class UserController {
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getEmail(), user.getPassword());
 		subject.login(token);
 		User checkedUser = (User) subject.getPrincipal();
-		String newToken = JwtTokenUtil.sign(checkedUser.getEmail(), checkedUser.getPassword());
+		String newToken = JwtTokenUtil.sign(checkedUser);
 		return new AccessToken(newToken);
 	}
 
@@ -57,11 +58,11 @@ public class UserController {
 			
 		}
 		
-		if(registerUser.getPassword() == null || registerUser.getComfirmPassword() == null) {
+		if(registerUser.getPassword() == null || registerUser.getConfirmPassword() == null) {
 			return new JsonObjectResponse(401, "Register User failed");
 		}
 		
-		if(!registerUser.getPassword().equals(registerUser.getComfirmPassword())) {
+		if(!registerUser.getPassword().equals(registerUser.getConfirmPassword())) {
 			return new JsonObjectResponse(401, "Register User failed");
 		}
 		
@@ -86,7 +87,7 @@ public class UserController {
 		Subject subject = SecurityUtils.getSubject();
 		String tokenString =  (String) subject.getPrincipal();
 		
-		String username = JwtTokenUtil.getUsername(tokenString);
+		String username = JwtTokenUtil.getEmail(tokenString);
 		if(StringUtils.isEmpty(tokenString)) {
 			return null;
 		}
@@ -113,4 +114,13 @@ public class UserController {
 		return userService.getUserList();
 	}
 
+	
+	@RequestMapping(value = "/count", method = RequestMethod.GET)
+	@RequiresRoles("user")
+	public UserCount getUserCount() {
+		UserCount userCount = new UserCount();
+		userCount.setTotalCount(userService.getUserCount());
+		userCount.setTodaysRegister(userService.getTodaysRegister());
+		return userCount;
+	}
 }

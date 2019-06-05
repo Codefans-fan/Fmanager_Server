@@ -23,4 +23,7 @@ public interface UserDAO {
 
 	public void deleteUserById(long id);
 	
+	public long getUserCount();
+	
+	public long getTodaysRegister();
 }

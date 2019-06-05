@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,7 +76,7 @@ public class ArticleController {
     	Subject subject = SecurityUtils.getSubject();
 		String tokenString =  (String) subject.getPrincipal();
 		
-		String username = JwtTokenUtil.getUsername(tokenString);
+		String username = JwtTokenUtil.getEmail(tokenString);
 		if(StringUtils.isEmpty(tokenString)) {
 			return null;
 		}

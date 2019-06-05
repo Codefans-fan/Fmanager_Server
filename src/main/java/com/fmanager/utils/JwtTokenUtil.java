@@ -2,11 +2,16 @@ package main.java.com.fmanager.utils;
 
 import java.util.Date;
 
+import org.apache.shiro.util.StringUtils;
+
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+
+import main.java.com.fmanager.models.User;
 
 public final class JwtTokenUtil {
 
@@ -24,9 +29,9 @@ public final class JwtTokenUtil {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withClaim("username", username)
+                    .withClaim("email", username)
                     .build();
-            DecodedJWT jwt = verifier.verify(token);
+            verifier.verify(token);
             return true;
         } catch (Exception exception) {
             return false;
@@ -35,23 +40,38 @@ public final class JwtTokenUtil {
     
     /**
      *  get user name from token
-     * @return username 
+     * @return user name 
      */
-    public static String getUsername(String token) {
+    public static String getEmail(String token) {
         try {
             DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim("username").asString();
+            return jwt.getClaim("email").asString();
         } catch (JWTDecodeException e) {
             return null;
         }
     }
     
+    public static String sign(User user) {
+    	if(user != null) {
+    		Date date = new Date(System.currentTimeMillis()+EXPIRE_TIME);
+    		Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
+    		
+    		JWTCreator.Builder builder = JWT.create()
+    		        .withClaim("username", user.getUserName()).withClaim("email",user.getEmail());
+    		if(user.getRoleNames() != null && user.getRoleNames().size() > 0 ) {
+    			builder.withArrayClaim("roles",user.getRoleNames().toArray(new String[0]));
+    		}
+    		return  builder.withExpiresAt(date).sign(algorithm);
+    	}
+    	return StringUtils.EMPTY_STRING;
+    }
     
-    public static String sign(String username, String secret) {
+    
+    public static String sign(String email, String secret) {
         Date date = new Date(System.currentTimeMillis()+EXPIRE_TIME);
 		Algorithm algorithm = Algorithm.HMAC256(secret);
 		return JWT.create()
-		        .withClaim("username", username)
+		        .withClaim("email", email)
 		        .withExpiresAt(date)
 		        .sign(algorithm);
     }

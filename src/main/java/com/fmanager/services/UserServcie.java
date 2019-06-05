@@ -23,4 +23,8 @@ public interface UserServcie {
 	
 	public List<UserRole> getUserRoles();
 	
+	public long getUserCount();
+	
+	public long getTodaysRegister();
+	
 }

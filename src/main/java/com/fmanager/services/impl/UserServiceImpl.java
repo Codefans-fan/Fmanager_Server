@@ -1,6 +1,8 @@
 package main.java.com.fmanager.services.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -91,17 +93,28 @@ public class UserServiceImpl implements UserServcie {
 	public void registerUser(RegisterUser registerUser) {
 		
 		User user = new User();
-		user.setUserName(registerUser.getUserName());
+		user.setUserName(registerUser.getFullName());
 		user.setEmail(registerUser.getEmail());
 		user.setMobile(registerUser.getMobile());
 		String hashedPasswordHex = new SimpleHash(Sha256Hash.ALGORITHM_NAME, registerUser.getPassword(), ByteSource.Util.bytes(user.getSalt())).toHex();
 		user.setPassword(hashedPasswordHex);
+		user.setCreateDate(new Timestamp(System.currentTimeMillis()));
 		userDAO.registerUser(user);
 	}
 
 	@Override
 	public List<UserRole> getUserRoles() {
 		return userRoleDAO.getRoleList();
+	}
+
+	@Override
+	public long getUserCount() {
+		return userDAO.getUserCount();
+	}
+
+	@Override
+	public long getTodaysRegister() {
+		return userDAO.getTodaysRegister();
 	}
 
 }

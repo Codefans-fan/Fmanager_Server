@@ -2,22 +2,25 @@ package main.java.com.fmanager.models;
 
 public class RegisterUser {
 	
-	private String userName;
+	
+	
+	private String fullName;
 	
 	private String password;
 	
-	private String comfirmPassword;
+	private String confirmPassword;
 	
 	private String mobile;
 	
 	private String email;
 
-	public String getUserName() {
-		return userName;
+
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getPassword() {
@@ -28,12 +31,13 @@ public class RegisterUser {
 		this.password = password;
 	}
 
-	public String getComfirmPassword() {
-		return comfirmPassword;
+	
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
-	public void setComfirmPassword(String comfirmPassword) {
-		this.comfirmPassword = comfirmPassword;
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public String getMobile() {

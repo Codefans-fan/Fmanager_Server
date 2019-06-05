@@ -34,8 +34,8 @@ public class JWTRealm extends AuthorizingRealm {
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 		Object o = principals.getPrimaryPrincipal();
 		if(o instanceof String) {
-			String username = JwtTokenUtil.getUsername((String)o);
-			User user = userServiceImpl.findByEmail(username);
+			String email = JwtTokenUtil.getEmail((String)o);
+			User user = userServiceImpl.findByEmail(email);
 			simpleAuthorizationInfo.addRoles(user.getRoleNames());
 			simpleAuthorizationInfo.addStringPermissions(user.getUserPermissions());
 		}
@@ -45,17 +45,17 @@ public class JWTRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
 		String token = (String) auth.getCredentials();
-        String username = JwtTokenUtil.getUsername(token);
-        if (username == null) {
+        String email = JwtTokenUtil.getEmail(token);
+        if (email == null) {
             throw new AuthenticationException("token invalid");
         }
 
-        User userBean = userServiceImpl.findByEmail(username);
+        User userBean = userServiceImpl.findByEmail(email);
         if (userBean == null) {
             throw new AuthenticationException("User didn't existed!");
         }
 
-        if (!JwtTokenUtil.verify(token, username, userBean.getPassword())) {
+        if (!JwtTokenUtil.verify(token, email, userBean.getPassword())) {
             throw new AuthenticationException("Username or password error");
         }
 
