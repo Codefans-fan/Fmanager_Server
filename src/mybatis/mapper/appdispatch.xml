@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="main.java.com.fmanager.dao.AppDispatchDAO">
+
+	<insert id="insertApp" parameterType="main.java.com.fmanager.models.AppDispatch">
+		insert into app_dispatch (app_id, user_id, app_name, combo, app_type,  app_bundle, app_version,
+  app_file) values (
+			#{appId}, #{userId}, #{appName},#{combo},#{appType},#{appBundle},#{appVersion},#{appFile}
+		)
+	</insert>
+	
+	
+	<select id="getAppDispatchByUserId" parameterType="Long" resultType="main.java.com.fmanager.models.AppDispatch">
+		select id as id, app_id as appId, app_name as appName, combo as combo, app_type as appType, app_bundle as appBundle, app_version as appVersion,
+		app_file as appFile from app_dispatch  where user_id = #{userId}
+	</select>
+</mapper>

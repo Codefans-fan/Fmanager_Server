@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import main.java.com.fmanager.exception.FmanagerRestException;
 import main.java.com.fmanager.models.JsonObjectResponse;
 
 @RestControllerAdvice
@@ -35,6 +36,9 @@ public class ExceptionHandlerController {
     public JsonObjectResponse globalException(HttpServletRequest request, Throwable ex) {
     	ex.printStackTrace();
     	logger.debug(ex.getMessage());
+    	if(ex instanceof FmanagerRestException) {
+    		return new JsonObjectResponse(((FmanagerRestException)ex).getErrorCode(), ex.getMessage());
+    	}
         return new JsonObjectResponse(getStatus(request).value(), ex.getMessage());
     }
 

@@ -9,4 +9,8 @@ public final class ErrorNumber {
 	public static final int ARTICLE_TITLE_EMPTY = 101;
 	
 	public static final int AUTHENTICATION_ERROR = 102;
+	
+	public static final int FILE_SAVE_ERROR = 103;
+	
+	public static final int FILE_TYPE_ERROR = 104;
 }

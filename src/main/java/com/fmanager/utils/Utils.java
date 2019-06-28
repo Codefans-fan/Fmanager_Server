@@ -13,4 +13,14 @@ public final class Utils {
 		return Base64.encodeBase64String(bytes);
 	}
 	
+	/**
+	 * generate file name with unique 
+	 * @param name
+	 * @return
+	 */
+	public static String generateFileName(String name) {
+		return String.valueOf(System.currentTimeMillis())+"-"+ name;
+	}
+	
+	
 }
