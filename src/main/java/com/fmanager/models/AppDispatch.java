@@ -1,5 +1,7 @@
 package main.java.com.fmanager.models;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -33,6 +35,9 @@ public class AppDispatch extends BaseEntity{
 	//file path
 	private String appFile;
 
+	
+	private List<AppVersion> versionList;
+	
 	public String getAppId() {
 		return appId;
 	}
@@ -112,6 +117,14 @@ public class AppDispatch extends BaseEntity{
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	public List<AppVersion> getVersionList() {
+		return versionList;
+	}
+
+	public void setVersionList(List<AppVersion> versionList) {
+		this.versionList = versionList;
 	}
 	
 	

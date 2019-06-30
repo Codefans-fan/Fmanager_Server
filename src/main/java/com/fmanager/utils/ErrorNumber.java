@@ -13,4 +13,7 @@ public final class ErrorNumber {
 	public static final int FILE_SAVE_ERROR = 103;
 	
 	public static final int FILE_TYPE_ERROR = 104;
+	
+	public static final int RECORD_NOT_FOUND = 105;
+	
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,11 +55,29 @@ public class AppDispatchController {
 		return types;
 	}
 	
-	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	@RequiresRoles("user")
-	public AppDispatch getAppDetail(@PathVariable long id) {
+	public AppDispatch getAppDetail(@RequestParam long id) throws FmanagerRestException {
 
-		return null;
+		return appDispatchService.getAppDetail(id);
 	}
 	
+	
+	@RequestMapping(value = "/newversion", method = RequestMethod.POST)
+	@RequiresRoles("user")
+	public AppDispatch newVersion(@RequestParam("file") MultipartFile file,@RequestParam("appId") long appId) throws FmanagerRestException {
+
+		AppDispatch app =  appDispatchService.getAppDetail(appId);
+		
+		if(app == null) {
+			
+			throw new FmanagerRestException(ErrorNumber.RECORD_NOT_FOUND, "App not found");
+		}
+		
+		if (file.getOriginalFilename().endsWith(ConstantString.APK_FILE_SUFFIX) || file.getOriginalFilename().endsWith(ConstantString.IOS_FILE_SUFFIX)) {
+			return appDispatchService.newAppVersion(file, app);
+		}
+
+		throw new FmanagerRestException(ErrorNumber.FILE_TYPE_ERROR, "unknow type of app");
+	}
 }

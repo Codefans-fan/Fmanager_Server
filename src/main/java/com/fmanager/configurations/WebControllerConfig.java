@@ -1,7 +1,6 @@
 package main.java.com.fmanager.configurations;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 import javax.annotation.Resource;
 

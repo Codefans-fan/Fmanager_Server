@@ -12,6 +12,45 @@
 	
 	<select id="getAppDispatchByUserId" parameterType="Long" resultType="main.java.com.fmanager.models.AppDispatch">
 		select id as id, app_id as appId, app_name as appName, combo as combo, app_type as appType, app_bundle as appBundle, app_version as appVersion,
-		app_file as appFile from app_dispatch  where user_id = #{userId}
+		app_file as appFile from app_dispatch  where user_id = #{userId} order by id
 	</select>
+	
+	
+	<resultMap type="main.java.com.fmanager.models.AppDispatch" id="AppDetailResultMap">
+	    <id property="id" column="id"/>
+	    <result property="userId" column="user_id"/>
+	    <result property="appId" column="app_id"/>
+	    <result property="appName" column="app_name"/>
+	     <result property="combo" column="combo"/>
+	     <result property="appType" column="app_type"/>
+	      <result property="appBundle" column="app_bundle"/>
+	      <result property="appVersion" column="app_version"/>
+	     <result property="version" column="version"/>
+	   <result property="appFile" column="app_file"/>
+		<collection property="versionList" ofType="main.java.com.fmanager.models.AppVersion" javaType="ArrayList" select="getAppVersions" column="id">
+		</collection>
+	</resultMap>
+	
+	
+	<select id="getAppDetail" parameterType="Long" resultMap="AppDetailResultMap">
+		select id ,user_id, app_id, app_name, combo, app_type, app_bundle, app_version,
+		version, app_file from app_dispatch where id = #{id} 
+	</select>
+	
+	<select id="getAppVersions" parameterType="Long" resultType="main.java.com.fmanager.models.AppVersion">
+		select id as id, download_count as downloadCount, version as version, app_file as appFile, create_time as createTime from app_version where appref_id=#{id}
+	    order by version
+	</select>
+	
+	
+	<insert id="insertNewVersion" parameterType="main.java.com.fmanager.models.AppVersion" >
+		insert into app_version (appref_id, download_count, version ,  app_file) values (
+			#{appRefId} ,#{downloadCount}, #{version}, #{appFile})
+	</insert>
+	
+	<update id="updateAppDispatch" parameterType="main.java.com.fmanager.models.AppDispatch">
+		update app_dispatch set app_id = #{appId}, app_name = #{appName}, combo = #{combo}, app_type = #{appType}, app_bundle = #{appBundle}, app_version = #{appVersion},
+		app_file = #{appFile}, download_count = #{downloadCount}, version=#{version} where id = #{id}
+	</update>
+	
 </mapper>
